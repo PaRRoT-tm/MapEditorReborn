@@ -19,12 +19,12 @@
         public override DoorObject Init(DoorSerializable doorSerializable)
         {
             _breakableDoor = Door as BreakableDoor;
-            _vanillaBase = new(Door.IsOpen, Door.RequiredPermissions.RequiredPermissions, _breakableDoor?.IgnoredDamage ?? DoorDamageType.Weapon, _breakableDoor?.MaxHealth ?? 0f);
+            _vanillaBase = new(Door.IsOpen, Door.KeycardPermissions, _breakableDoor?.IgnoredDamage ?? DoorDamageType.Weapon, _breakableDoor?.MaxHealth ?? 0f);
             Base = doorSerializable;
 
             Door.IsOpen = doorSerializable.IsOpen;
             Door.ChangeLock(doorSerializable.IsLocked ? DoorLockType.SpecialDoorFeature : DoorLockType.None);
-            Door.RequiredPermissions.RequiredPermissions = doorSerializable.KeycardPermissions;
+            Door.KeycardPermissions = doorSerializable.KeycardPermissions;
             if (_breakableDoor != null)
             {
                 _breakableDoor.IgnoredDamage = doorSerializable.IgnoredDamageSources;
@@ -44,14 +44,23 @@
         {
             DoorNametagExtension.NamedDoors.Remove("049_GATE");
             DoorNametagExtension.NamedDoors.Add("049_GATE", null);
-            Door.Get(DoorType.Scp049Gate).Base.gameObject.AddComponent<DoorNametagExtension>()._nametag = "049_GATE";
+
+            var door = Door.Get(DoorType.Scp049Gate);
+            if (door != null && door.Base != null && door.Base.gameObject != null)
+            {
+                var doorNametag = door.Base.gameObject.AddComponent<DoorNametagExtension>();
+                doorNametag._nametag = "049_GATE";
+            }
+            else
+            {
+            }
         }
 
         private void SetToDefault()
         {
             Door.IsOpen = _vanillaBase.IsOpen;
             Door.ChangeLock(DoorLockType.None);
-            Door.RequiredPermissions.RequiredPermissions = _vanillaBase.KeycardPermissions;
+            Door.KeycardPermissions = _vanillaBase.KeycardPermissions;
             if (_breakableDoor != null)
             {
                 _breakableDoor.IgnoredDamage = _vanillaBase.IgnoredDamageSources;

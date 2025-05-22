@@ -97,7 +97,7 @@ namespace MapEditorReborn.Commands.ModifyingCommands.Position.SubCommands
             Vector3 prevPos = position + (player.CameraTransform.forward * multiplier);
             int i = 0;
 
-            while (!RoundSummary.singleton._roundEnded)
+            while (!RoundSummary.singleton.IsRoundEnded)
             {
                 yield return Timing.WaitForOneFrame;
 

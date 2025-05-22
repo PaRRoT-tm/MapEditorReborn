@@ -69,7 +69,7 @@ namespace MapEditorReborn.API.Features.Objects
             _prevType = Base.DoorType;
             Door.IsOpen = Base.IsOpen;
             Door.ChangeLock(Base.IsLocked ? DoorLockType.SpecialDoorFeature : DoorLockType.None);
-            Door.RequiredPermissions.RequiredPermissions = Base.KeycardPermissions;
+            Door.KeycardPermissions = Base.KeycardPermissions;
             if (Door is Exiled.API.Features.Doors.BreakableDoor breakableDoor)
             {
                 breakableDoor.IgnoredDamage = Base.IgnoredDamageSources;

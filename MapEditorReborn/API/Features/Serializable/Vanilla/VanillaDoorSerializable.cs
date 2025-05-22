@@ -4,7 +4,6 @@
     using Interactables.Interobjects.DoorUtils;
     using UnityEngine;
     using YamlDotNet.Serialization;
-    using KeycardPermissions = Interactables.Interobjects.DoorUtils.KeycardPermissions;
 
     public class VanillaDoorSerializable : DoorSerializable
     {
